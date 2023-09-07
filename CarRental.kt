@@ -47,11 +47,9 @@ class Customer(private val name: String) {
         _rentals.forEach { rental ->
             val thisAmount = rental.determineAmount()
             frequentRenterPoints += addFrequentRenterPoints(rental)
-            //show figures for this rental
             builder.appendLine("\t${rental.car.title}\t${thisAmount.toString()}")
             totalAmount += thisAmount
         }
-        //add footer lines
         builder.appendLine("Final rental payment owed $totalAmount")
         builder.append("You received an additional $frequentRenterPoints frequent customer points")
         return builder.toString()
@@ -59,7 +57,6 @@ class Customer(private val name: String) {
 
     private fun addFrequentRenterPoints(rental: Rental): Int {
         var frequentRenterPoints = 1
-        // add bonus for a two day new release rental
         if ((rental.car.priceCode == Car.PriceCode.SUPERCAR) && rental.daysRented > 1) {
             frequentRenterPoints += 1
         }
