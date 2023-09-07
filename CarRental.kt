@@ -43,16 +43,12 @@ class Customer(private val name: String) {
         var totalAmount = BigDecimal.ZERO.setScale(2)
         var frequentRenterPoints = 0
         val builder = StringBuilder()
-        builder.append("Rental Record for ")
-        builder.appendLine(name)
-        for (rental in _rentals) {
+        builder.appendLine("Rental Record for $name")
+        _rentals.forEach { rental ->
             val thisAmount = rental.determineAmount()
             frequentRenterPoints += addFrequentRenterPoints(rental)
             //show figures for this rental
-            builder.append("\t")
-            builder.append(rental.car.title)
-            builder.append("\t")
-            builder.appendLine(thisAmount.toString())
+            builder.appendLine("\t${rental.car.title}\t${thisAmount.toString()}")
             totalAmount += thisAmount
         }
         //add footer lines
@@ -71,7 +67,7 @@ class Customer(private val name: String) {
     }
 }
 
-fun main(){
+fun main() {
     val rental1 = Rental(Car("Mustang", Car.PriceCode.MUSCLE), 5)
     val rental2 = Rental(Car("Lambo", Car.PriceCode.SUPERCAR), 20)
     val customer = Customer("Liviu")
